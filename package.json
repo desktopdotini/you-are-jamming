@@ -1,0 +1,29 @@
+{
+  "name": "standwithukraine",
+  "version": "4.2.0",
+  "description": "vibing",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "compile": "electron-builder build"
+  },
+  "repository": "https://github.com/desktopdotini/breadboard",
+  "author": "Tanoo Ltd.",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^2.0.6",
+    "electron-builder": "^22.13.1"
+  },
+  "dependencies": {
+    "child_process": "^1.0.2",
+    "electron-localshortcut": "^3.2.1",
+    "fs": "^0.0.1-security"
+  },
+  "build": {
+    "appId": "tanu.kiee.devs.vibing",
+    "win": {
+      "target": "portable",
+      "icon": "build/icon.ico"
+    }
+  }
+}
