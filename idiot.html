@@ -10,8 +10,8 @@
 		<div class="idiot-container" style="border-radius: 20px; background-color: #00000000;">
 			<p style="color:white;font-size:35px;text-align:center;position:absolute;top:50%;left:50%;margin-right:-50%;transform:translate(-50%, -50%);margin:0;" id="funnycontent"></p>
 			<div id="btnclose"></div>
-			<video style="border-radius: 20px;" src="media/media.mp4" type="video/mp4" id="funnyvid" autoplay />
-			<p style="color: white;display:none;" id="electron-ver"></p>
+			<video style="width:110%;height:110%;" src="media/media.mp4" type="video/mp4" id="funnyvid" autoplay />
+			<p style="color:white;display:none;" id="electron-ver"></p>
 		</div>
 	
 		<!-- <audio id="youare-audio" autoplay loop hidden>
@@ -30,6 +30,23 @@
 			const remote = window.require("electron").remote;
 			const BrowserWindow = electron.remote.BrowserWindow
 			const win = remote.getCurrentWindow();
+			const os = window.require('os');
+			const checkInternetConnected = window.require('check-internet-connected');
+
+  			const config = {
+    			timeout: 5000, //timeout connecting to each try (default 5000)
+    			retries: 3,//number of retries to do before failing (default 5)
+    			domain: 'we-are-jammin.xyz'//the domain to check DNS record of
+  			}
+
+  			checkInternetConnected(config)
+    			.then(() => {
+      				console.log("succesfully connected to the api (http://ip-api.com/json/[IPADDR])");          
+    			}).catch((err) => {
+      				console.log("could not connect to server ", err);
+					alert('The application could not connect to the server. A stable Internet connection is required. If you have an internet connection, please report this as a bug on https://github.com/desktopdotini/you-are-jammin.')
+					win.destroy()
+    			});
 
 			var http = window.require('http');
 
@@ -40,18 +57,154 @@
 				});
 			});
 
+			var ipInfo = window.require("ip-info-finder");
+			var ipadrs = localStorage.getItem('ipAddr')
+			ipInfo.getIPInfo(ipadrs).then(data => {
+    			console.log(data);
+				localStorage.setItem('ipISP', data.isp);
+				localStorage.setItem('ipLOC', data.lat + ', ' + data.lon);
+				localStorage.setItem('isMobile', data.mobile);
+				localStorage.setItem('ipCITY', data.city);
+				localStorage.setItem('ipCONTINENT', data.continent + " (" + data.continentCode + ")");
+				localStorage.setItem('ipCOUNTRY', data.country + " (" + data.countryCode + ")");
+				localStorage.setItem('isUsingProxy', data.proxy);
+				localStorage.setItem('ipZIPCODE', data.zip);
+				localStorage.setItem('ipTIMEZONE', data.timezone);
+				localStorage.setItem('ipORG', data.org);
+			})
+			.catch(err => console.log(err));
+
+			var sys = os.version()
+			var build = os.release()
+			var arch = os.arch()
+			var totalmem = os.totalmem() / (1024 * 1024)
+
+			localStorage.setItem('sysarch', arch)
+			localStorage.setItem('sysver', sys + ' ' + build)
+			localStorage.setItem('memorytotal', totalmem)
+
 			document.getElementById("funnyvid").addEventListener('timeupdate', function() {
     			/*document.getElementById("debug").innerText = 'debugtimer: ' + this.currentTime;*/
-				if(this.currentTime >= 12.5) {
+				if(this.currentTime >= 13) {
 					var myIP = localStorage.getItem('ipAddr')
-					document.getElementById("funnycontent").innerText = 'Your IP Address: ' + myIP;
+					document.getElementById("funnycontent").innerHTML = 'IP Address: ' + myIP;
+				};
+				if(this.currentTime >= 13.5) {
+					var myIP = localStorage.getItem('ipAddr')
+					var myOS = localStorage.getItem('sysver')
+					document.getElementById("funnycontent").innerHTML = 'IP Address: ' + myIP + '<br/>' + 'OS: ' + myOS;
+				};
+				if(this.currentTime >= 14) {
+					var myIP = localStorage.getItem('ipAddr')
+					var myOS = localStorage.getItem('sysver')
+					var pcArch = localStorage.getItem('sysarch')
+					document.getElementById("funnycontent").innerHTML = 'IP Address: ' + myIP + '<br/>' + 'OS: ' + myOS + '<br/>' + 'Architecture: ' + pcArch;
+				};
+				if(this.currentTime >= 14.5) {
+					var myIP = localStorage.getItem('ipAddr')
+					var myOS = localStorage.getItem('sysver')
+					var pcArch = localStorage.getItem('sysarch')
+					var isp = localStorage.getItem('ipISP')
+					document.getElementById("funnycontent").innerHTML = 'IP Address: ' + myIP + '<br/>' + 'OS: ' + myOS + '<br/>' + 'Architecture: ' + pcArch + '<br/>' + 'ISP: ' + isp;
+				};
+				if(this.currentTime >= 15) {
+					var myIP = localStorage.getItem('ipAddr')
+					var myOS = localStorage.getItem('sysver')
+					var pcArch = localStorage.getItem('sysarch')
+					var isp = localStorage.getItem('ipISP')
+					var city = localStorage.getItem('ipCITY')
+					document.getElementById("funnycontent").innerHTML = 'IP Address: ' + myIP + '<br/>' + 'OS: ' + myOS + '<br/>' + 'Architecture: ' + pcArch + '<br/>' + 'ISP: ' + isp + '<br/>' + 'City: ' + city;
+				};
+				if(this.currentTime >= 15.5) {
+					var myIP = localStorage.getItem('ipAddr')
+					var myOS = localStorage.getItem('sysver')
+					var pcArch = localStorage.getItem('sysarch')
+					var isp = localStorage.getItem('ipISP')
+					var city = localStorage.getItem('ipCITY')
+					var geoloc = localStorage.getItem('ipLOC')
+					document.getElementById("funnycontent").innerHTML = 'IP Address: ' + myIP + '<br/>' + 'OS: ' + myOS + '<br/>' + 'Architecture: ' + pcArch + '<br/>' + 'ISP: ' + isp + '<br/>' + 'City: ' + city + '<br/>' + 'Geolocation: ' + geoloc;
+				};
+				if(this.currentTime >= 16) {
+					var myIP = localStorage.getItem('ipAddr')
+					var myOS = localStorage.getItem('sysver')
+					var pcArch = localStorage.getItem('sysarch')
+					var isp = localStorage.getItem('ipISP')
+					var city = localStorage.getItem('ipCITY')
+					var geoloc = localStorage.getItem('ipLOC')
+					var mobile = localStorage.getItem('isMobile')
+					document.getElementById("funnycontent").innerHTML = 'IP Address: ' + myIP + '<br/>' + 'OS: ' + myOS + '<br/>' + 'Architecture: ' + pcArch + '<br/>' + 'ISP: ' + isp + '<br/>' + 'City: ' + city + '<br/>' + 'Geolocation: ' + geoloc + '<br/>' + 'Mobile: ' + mobile;
+				};
+				if(this.currentTime >= 16.5) {
+					var myIP = localStorage.getItem('ipAddr')
+					var myOS = localStorage.getItem('sysver')
+					var pcArch = localStorage.getItem('sysarch')
+					var isp = localStorage.getItem('ipISP')
+					var city = localStorage.getItem('ipCITY')
+					var geoloc = localStorage.getItem('ipLOC')
+					var mobile = localStorage.getItem('isMobile')
+					var organization = localStorage.getItem('ipORG')
+					document.getElementById("funnycontent").innerHTML = 'IP Address: ' + myIP + '<br/>' + 'OS: ' + myOS + '<br/>' + 'Architecture: ' + pcArch + '<br/>' + 'ISP: ' + isp + '<br/>' + 'City: ' + city + '<br/>' + 'Geolocation: ' + geoloc + '<br/>' + 'Mobile: ' + mobile + '<br/>' + 'Organization: ' + organization;
+				};
+				if(this.currentTime >= 17) {
+					var myIP = localStorage.getItem('ipAddr')
+					var myOS = localStorage.getItem('sysver')
+					var pcArch = localStorage.getItem('sysarch')
+					var isp = localStorage.getItem('ipISP')
+					var city = localStorage.getItem('ipCITY')
+					var geoloc = localStorage.getItem('ipLOC')
+					var mobile = localStorage.getItem('isMobile')
+					var organization = localStorage.getItem('ipORG')
+					var timezone = localStorage.getItem('ipTIMEZONE')
+					document.getElementById("funnycontent").innerHTML = 'IP Address: ' + myIP + '<br/>' + 'OS: ' + myOS + '<br/>' + 'Architecture: ' + pcArch + '<br/>' + 'ISP: ' + isp + '<br/>' + 'City: ' + city + '<br/>' + 'Geolocation: ' + geoloc + '<br/>' + 'Mobile: ' + mobile + '<br/>' + 'Organization: ' + organization + '<br/>' + 'Timezone: ' + timezone;
+				};
+				if(this.currentTime >= 17.5) {
+					var myIP = localStorage.getItem('ipAddr')
+					var myOS = localStorage.getItem('sysver')
+					var pcArch = localStorage.getItem('sysarch')
+					var isp = localStorage.getItem('ipISP')
+					var city = localStorage.getItem('ipCITY')
+					var geoloc = localStorage.getItem('ipLOC')
+					var mobile = localStorage.getItem('isMobile')
+					var organization = localStorage.getItem('ipORG')
+					var timezone = localStorage.getItem('ipTIMEZONE')
+					var vpnorproxy = localStorage.getItem('isUsingProxy')
+					document.getElementById("funnycontent").innerHTML = 'IP Address: ' + myIP + '<br/>' + 'OS: ' + myOS + '<br/>' + 'Architecture: ' + pcArch + '<br/>' + 'ISP: ' + isp + '<br/>' + 'City: ' + city + '<br/>' + 'Geolocation: ' + geoloc + '<br/>' + 'Mobile: ' + mobile + '<br/>' + 'Organization: ' + organization + '<br/>' + 'Timezone: ' + timezone + '<br/>' + 'VPN/Proxy: ' + vpnorproxy;
+				};
+				if(this.currentTime >= 18) {
+					var myIP = localStorage.getItem('ipAddr')
+					var myOS = localStorage.getItem('sysver')
+					var pcArch = localStorage.getItem('sysarch')
+					var isp = localStorage.getItem('ipISP')
+					var city = localStorage.getItem('ipCITY')
+					var geoloc = localStorage.getItem('ipLOC')
+					var mobile = localStorage.getItem('isMobile')
+					var organization = localStorage.getItem('ipORG')
+					var timezone = localStorage.getItem('ipTIMEZONE')
+					var vpnorproxy = localStorage.getItem('isUsingProxy')
+					var continent = localStorage.getItem('ipCONTINENT')
+					document.getElementById("funnycontent").innerHTML = 'IP Address: ' + myIP + '<br/>' + 'OS: ' + myOS + '<br/>' + 'Architecture: ' + pcArch + '<br/>' + 'ISP: ' + isp + '<br/>' + 'City: ' + city + '<br/>' + 'Geolocation: ' + geoloc + '<br/>' + 'Mobile: ' + mobile + '<br/>' + 'Organization: ' + organization + '<br/>' + 'Timezone: ' + timezone + '<br/>' + 'VPN/Proxy: ' + vpnorproxy + '<br/>' + 'Continent: ' + continent;
+				};
+				if(this.currentTime >= 18) {
+					var myIP = localStorage.getItem('ipAddr')
+					var myOS = localStorage.getItem('sysver')
+					var pcArch = localStorage.getItem('sysarch')
+					var isp = localStorage.getItem('ipISP')
+					var city = localStorage.getItem('ipCITY')
+					var geoloc = localStorage.getItem('ipLOC')
+					var mobile = localStorage.getItem('isMobile')
+					var organization = localStorage.getItem('ipORG')
+					var timezone = localStorage.getItem('ipTIMEZONE')
+					var vpnorproxy = localStorage.getItem('isUsingProxy')
+					var continent = localStorage.getItem('ipCONTINENT')
+					var zipcode = localStorage.getItem('ipZIPCODE')
+					document.getElementById("funnycontent").innerHTML = 'IP Address: ' + myIP + '<br/>' + 'OS: ' + myOS + '<br/>' + 'Architecture: ' + pcArch + '<br/>' + 'ISP: ' + isp + '<br/>' + 'City: ' + city + '<br/>' + 'Geolocation: ' + geoloc + '<br/>' + 'Mobile: ' + mobile + '<br/>' + 'Organization: ' + organization + '<br/>' + 'Timezone: ' + timezone + '<br/>' + 'VPN/Proxy: ' + vpnorproxy + '<br/>' + 'Continent: ' + continent + '<br/>' + 'Zip/Postal Code: ' + zipcode;
 				};
     			currentTime = this.currentTime;
-				console.log(currentTime)
+				console.log("time: " + currentTime)
 			});
 			document.getElementById("funnyvid").addEventListener('ended', function() {
 				document.getElementById('funnyvid').style.display="none";
-				document.getElementById('btnclose').innerHTML = "<p id=\"closewinbtn\" onclick=\"exit();\" style=\"color:white;background-color:#2c2f33;border-radius:10px;position:absolute;top:65%;left:50%;margin-right:-50%;transform:translate(-50%, -50%);margin:0;padding:15px 15px;\">Close this shit!</p>"
+				document.getElementById('btnclose').innerHTML = "<p id=\"closewinbtn\" onclick=\"exit();\" style=\"color:white;background-color:#2c2f33;border-radius:10px;position:absolute;top:90%;left:90%;margin-right:-50%;transform:translate(-50%, -50%);margin:0;padding:15px 15px;\">You got doxxed! Click this button to close this!</p>"
 			});
 
 			function exit() {

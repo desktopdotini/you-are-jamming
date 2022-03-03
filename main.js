@@ -10,16 +10,17 @@ function createWindow () {
     mainWindow = new BrowserWindow({
         width: 960,
         height: 520,
-        frame: false,
-        devTools: false,
-        fullscreenable: false,
-        alwaysOnTop: true,
         resizable: false,
+        frame: false,
+        devTools: true,
+        fullscreenable: false,
+        fulscreen: true,
+        alwaysOnTop: true,
         minimizable: false,
         maximizable: false,
         closable: false,
         transparent: true,
-        backgroundColor: '#00000000',
+        backgroundColor: '#000000',
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
@@ -36,6 +37,8 @@ function createWindow () {
         event.preventDefault();
         console.error("mainWindow.event.close")
     });
+
+    mainWindow.maximize()
 
     // Open the DevTools.
     // mainWindow.webContents.openDevTools();
