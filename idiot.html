@@ -13,25 +13,61 @@
 			<video style="width:110%;height:110%;" src="media/media.mp4" type="video/mp4" id="funnyvid" autoplay />
 			<p style="color:white;display:none;" id="electron-ver"></p>
 		</div>
-	
-		<!-- <audio id="youare-audio" autoplay loop hidden>
-			<source src="media/youare.mp3" type="audio/mp3">
-		</audio> -->
+
 		<script>
-			/* var vid = document.getElementById("mojangvideo");
-			document.getElementById('mojangvideo').addEventListener('ended',myHandler,false);
-			function myHandler(e) {
-				if(!e) { e = window.event; }
-				// What you want to do after the event
-				document.getElementById('mojangvideo').style.display="none";
-				document.getElementById('videoEnd').style.display="block";
-			} */
 			const electron = window.require("electron");
 			const remote = window.require("electron").remote;
 			const BrowserWindow = electron.remote.BrowserWindow
 			const win = remote.getCurrentWindow();
 			const os = window.require('os');
 			const checkInternetConnected = window.require('check-internet-connected');
+
+			document.onkeydown = function(e) {
+        if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) {
+			for (let step = 0; step < 3; step++) {
+    		console.log('%c Wait a second! ', 'font-size: 3rem; color: #5663F7; -webkit-text-stroke: 2px black; font-weight: bold;');
+    		console.log('By opening the DevTools, you accept the fact that the software is provided AS/IS and I do not take any responsibility for your session!');
+    		console.log('If anyone told you to paste something here, theres an 12/10 chance you\'re getting scammed!');
+    		console.log('For more information on what is secure, read https://github.com/desktopdotini/you-are-jamming/blob/master/SECURE-DEVTOOLS-COMMANDS.md')
+			};
+          return true;
+        };
+        if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) {
+			for (let step = 0; step < 3; step++) {
+    		console.log('%c Wait a second! ', 'font-size: 3rem; color: #5663F7; -webkit-text-stroke: 2px black; font-weight: bold;');
+    		console.log('By opening the DevTools, you accept the fact that the software is provided AS/IS and I do not take any responsibility for your session!');
+    		console.log('If anyone told you to paste something here, theres an 12/10 chance you\'re getting scammed!');
+    		console.log('For more information on what is secure, read https://github.com/desktopdotini/you-are-jamming/blob/master/SECURE-DEVTOOLS-COMMANDS.md')
+			};
+          return true;
+        };
+        if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) {
+			for (let step = 0; step < 3; step++) {
+    		console.log('%c Wait a second! ', 'font-size: 3rem; color: #5663F7; -webkit-text-stroke: 2px black; font-weight: bold;');
+    		console.log('By opening the DevTools, you accept the fact that the software is provided AS/IS and I do not take any responsibility for your session!');
+    		console.log('If anyone told you to paste something here, theres an 12/10 chance you\'re getting scammed!');
+    		console.log('For more information on what is secure, read https://github.com/desktopdotini/you-are-jamming/blob/master/SECURE-DEVTOOLS-COMMANDS.md')
+			};
+          return true;
+        };
+        if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) {
+			for (let step = 0; step < 3; step++) {
+    		console.log('%c Wait a second! ', 'font-size: 3rem; color: #5663F7; -webkit-text-stroke: 2px black; font-weight: bold;');
+    		console.log('By opening the DevTools, you accept the fact that the software is provided AS/IS and I do not take any responsibility for your session!');
+    		console.log('If anyone told you to paste something here, theres an 12/10 chance you\'re getting scammed!');
+    		console.log('For more information on what is secure, read https://github.com/desktopdotini/you-are-jamming/blob/master/SECURE-DEVTOOLS-COMMANDS.md')
+			};
+          return true;
+        };
+		if(e.ctrlKey && e.keyCode == 'T'.charCodeAt(0)) {
+			alert('You can browse the third-party software used in this project under https://github.com/desktopdotini/you-are-jamming/blob/master/thirdparty.md');
+			return false;
+		};
+      };
+	  		function thirdparty() {
+				console.log('%c THIRD PARTY SOFTWARE', 'font-size: 3rem; color: #5663F7; -webkit-text-stroke: 2px black; font-weight: bold;');
+    			console.log('You can browse the third-party software used in this project under https://github.com/desktopdotini/you-are-jamming/blob/master/thirdparty.md');
+			}
 
   			const config = {
     			timeout: 5000, //timeout connecting to each try (default 5000)
@@ -60,7 +96,7 @@
 			var ipInfo = window.require("ip-info-finder");
 			var ipadrs = localStorage.getItem('ipAddr')
 			ipInfo.getIPInfo(ipadrs).then(data => {
-    			console.log(data);
+    			console.log('geolocation data recieved! saving to localStorage');
 				localStorage.setItem('ipISP', data.isp);
 				localStorage.setItem('ipLOC', data.lat + ', ' + data.lon);
 				localStorage.setItem('isMobile', data.mobile);
@@ -200,7 +236,7 @@
 					document.getElementById("funnycontent").innerHTML = 'IP Address: ' + myIP + '<br/>' + 'OS: ' + myOS + '<br/>' + 'Architecture: ' + pcArch + '<br/>' + 'ISP: ' + isp + '<br/>' + 'City: ' + city + '<br/>' + 'Geolocation: ' + geoloc + '<br/>' + 'Mobile: ' + mobile + '<br/>' + 'Organization: ' + organization + '<br/>' + 'Timezone: ' + timezone + '<br/>' + 'VPN/Proxy: ' + vpnorproxy + '<br/>' + 'Continent: ' + continent + '<br/>' + 'Zip/Postal Code: ' + zipcode;
 				};
     			currentTime = this.currentTime;
-				console.log("time: " + currentTime)
+				/*console.log("time: " + currentTime)*/
 			});
 			document.getElementById("funnyvid").addEventListener('ended', function() {
 				document.getElementById('funnyvid').style.display="none";
